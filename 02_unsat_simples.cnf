@@ -1,0 +1,4 @@
+c insatisfazivel: x1 e NAO x1 ao mesmo tempo
+p cnf 1 2
+1 0
+-1 0

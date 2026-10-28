@@ -1,0 +1,4 @@
+c o primeiro chute (x1 = V) falha, o programa volta atras e tenta x1 = F
+p cnf 2 2
+-1 2 0
+-1 -2 0
