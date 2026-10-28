@@ -18,10 +18,6 @@ int eh_folha(No *no)
 
 No *montar_arvore(Fila *fila)
 {
-    // se o arquivo so tem um tipo de byte (tipo "AAAA"), a arvore seria so uma folha
-    // e o byte ficaria sem codigo. entao cria uma copia da folha pra raiz ter
-    // dois filhos. o byte acaba com o codigo "1", porque a copia da direita
-    // sobrescreve o codigo da esquerda (as duas folhas sao o mesmo byte)
     if (fila->tamanho == 1) {
         No *unico = remover_inicio(fila);
         No *copia = criar_no(pegar_byte(unico), 0, NULL, NULL);

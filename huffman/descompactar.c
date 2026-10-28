@@ -39,20 +39,18 @@ void descompactar(char *entrada, char *saida)
     int lixo = cabecalho >> 13;            // 3 bits de cima
     int tam_arvore = cabecalho & 8191;     // 13 bits de baixo (8191 em binario sao 13 uns)
 
-    // tamanho da arvore 0 quer dizer que o arquivo original era vazio
+    // arquivo original vazio
     if (tam_arvore == 0) {
         fclose(compactado);
         fclose(arquivo);
         return;
     }
 
-    // remonta a arvore a partir do arquivo
     No *raiz = ler_arvore(compactado);
 
     // tirando os 2 bytes do cabecalho e os bytes da arvore, o resto sao os dados
     int bytes_de_dados = tamanho_arquivo - 2 - tam_arvore;
-    // le os dados bit a bit: 0 desce pra esquerda e 1 desce pra direita
-    // quando chega numa folha, escreve o byte dela e volta pra raiz
+    
     No *atual = raiz;
 
     for (int i = 0; i < bytes_de_dados; i++) {

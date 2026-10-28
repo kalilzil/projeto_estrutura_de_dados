@@ -14,9 +14,6 @@ unsigned char ligar_bit(unsigned char c, int i)
     return mask | c;
 }
 
-// percorre a arvore anotando o caminho: esquerda -> 0 e direita -> 1
-// quando chega numa folha, o caminho feito ate ali vira o codigo daquele byte
-// ex: esquerda, direita, esquerda -> "010"
 void gerar_codigos(No *raiz, char codigos[256][257], char caminho[], int profundidade)
 {
     if (eh_folha(raiz)) {
@@ -78,7 +75,6 @@ void compactar(char *entrada, char *saida)
     gerar_codigos(raiz, codigos, caminho, 0);
 
     // conta quantos bits os codigos vao ocupar no total
-    // (long long porque em arquivo grande passa do limite do int)
     long long total_bits = 0;
     for (int i = 0; i < 256; i++) {
         if (frequencia[i] > 0) {
@@ -122,7 +118,7 @@ void compactar(char *entrada, char *saida)
         }
         c = fgetc(arquivo);
     }
-    if (posicao < 7) { // sobrou um byte incompleto: grava assim mesmo, os bits vazios sao o lixo
+    if (posicao < 7) { 
         fputc(byte, compactado);
     }
 
