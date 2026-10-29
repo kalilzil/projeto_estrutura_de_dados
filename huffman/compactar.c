@@ -7,7 +7,6 @@
 
 // --- auxiliares ---
 
-// liga o bit i do byte c
 unsigned char ligar_bit(unsigned char c, int i)
 {
     unsigned char mask = 1 << i;
@@ -32,16 +31,13 @@ void gerar_codigos(No *raiz, char codigos[256][257], char caminho[], int profund
 
 void compactar(char *entrada, char *saida)
 {
-    // abre o arquivo de entrada pra ler em binario
     FILE *arquivo = fopen(entrada, "rb");
     if (arquivo == NULL) {
         printf("Nao foi possivel abrir o arquivo %s\n", entrada);
         return;
     }
-    // abre o arquivo de saida pra escrever em binario
     FILE *compactado = fopen(saida, "wb");
 
-    // conta quantas vezes cada byte aparece
     int frequencia[256] = {0};
     int c = fgetc(arquivo);
     while (c != EOF) {
@@ -49,7 +45,6 @@ void compactar(char *entrada, char *saida)
         c = fgetc(arquivo);
     }
 
-    // cada byte que apareceu pelo menos uma vez vira uma folha na fila
     Fila *fila = criar_fila(comparar_frequencia);
     for (int i = 0; i < 256; i++) {
         if (frequencia[i] > 0) {
@@ -57,7 +52,7 @@ void compactar(char *entrada, char *saida)
         }
     }
 
-    // arquivo vazio: so grava o cabecalho zerado
+    // arquivo vazio
     if (fila->tamanho == 0) {
         fputc(0, compactado);
         fputc(0, compactado);
@@ -67,14 +62,12 @@ void compactar(char *entrada, char *saida)
         return;
     }
 
-    // monta a arvore e gera os codigos
     No *raiz = montar_arvore(fila);
 
     char codigos[256][257];
     char caminho[257];
     gerar_codigos(raiz, codigos, caminho, 0);
 
-    // conta quantos bits os codigos vao ocupar no total
     long long total_bits = 0;
     for (int i = 0; i < 256; i++) {
         if (frequencia[i] > 0) {
@@ -82,9 +75,9 @@ void compactar(char *entrada, char *saida)
         }
     }
 
-    // lixo = bits que faltam pra completar o ultimo byte
+
     int lixo = 8 - (total_bits % 8);
-    if (lixo == 8) { // o ultimo byte ficou cheio, entao nao tem lixo
+    if (lixo == 8) { /// nao tem lixo
         lixo = 0;
     }
 
@@ -94,13 +87,11 @@ void compactar(char *entrada, char *saida)
     fputc(cabecalho >> 8, compactado);  // 8 bits de cima
     fputc(cabecalho & 255, compactado); // 8 bits de baixo
 
-    // depois do cabecalho vem a arvore em pre-ordem
     escrever_arvore(raiz, compactado);
 
-    // le o arquivo de novo e troca cada byte pelo codigo dele
     rewind(arquivo);
     unsigned char byte = 0;
-    int posicao = 7; // comeca pelo bit mais a esquerda (b7)
+    int posicao = 7; // 7 6 5 4 3 2 1 0 -> 8 Bits
 
     c = fgetc(arquivo);
     while (c != EOF) {
@@ -110,7 +101,7 @@ void compactar(char *entrada, char *saida)
             }
             posicao--;
 
-            if (posicao < 0) { // byte cheio: grava e comeca outro
+            if (posicao < 0) { // byte cheio
                 fputc(byte, compactado);
                 byte = 0;
                 posicao = 7;

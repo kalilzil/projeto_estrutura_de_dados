@@ -9,5 +9,5 @@ Linux/WSL `./satsolver arquivo.cnf`
 
 
 ### Arquivos:
-- SAT_solver_ed.c         -> 
-- *.cnf -> Arquivo DIMACS com equações.
+- SAT_solver_ed.c         -> Código para verificar se as equações boleanas serão satisfaziveis
+- *.cnf                   -> Arquivo DIMACS com equações.

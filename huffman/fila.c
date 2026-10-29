@@ -51,7 +51,6 @@ void inserir_ordenado(Fila *fila, No *novo)
         novo->proximo = fila->inicio;
         fila->inicio = novo;
     } else {
-        // senao, anda ate achar o lugar certo e encaixa ele ali
         No *atual = fila->inicio;
         while (atual->proximo != NULL && fila->comparar(atual->proximo, novo) < 0) {
             atual = atual->proximo;

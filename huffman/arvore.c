@@ -68,14 +68,13 @@ No *ler_arvore(FILE *arquivo)
     unsigned char byte = fgetc(arquivo);
 
     if (byte == '*') {
-        // no interno: primeiro vem a subarvore da esquerda, depois a da direita
         No *esquerda = ler_arvore(arquivo);
         No *direita = ler_arvore(arquivo);
         return criar_no('*', 0, esquerda, direita);
     }
 
     if (byte == '\\') {
-        // '\' indica escape: o byte seguinte vira folha, mesmo sendo '*' ou '\'
+        // '\' = '*' ou '\'
         byte = fgetc(arquivo);
     }
     return criar_no(byte, 0, NULL, NULL);

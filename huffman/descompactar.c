@@ -6,7 +6,6 @@
 
 // --- auxiliares ---
 
-// ve se o bit i do byte c ta ligado
 int bit_ligado(unsigned char c, int i)
 {
     unsigned char mask = 1 << i;
@@ -22,15 +21,13 @@ void descompactar(char *entrada, char *saida)
         printf("Nao foi possivel abrir o arquivo %s\n", entrada);
         return;
     }
-    // abre o arquivo de saida pra escrever em binario
     FILE *arquivo = fopen(saida, "wb");
 
-    // conta quantos bytes o arquivo compactado tem
     int tamanho_arquivo = 0;
     while (fgetc(compactado) != EOF) {
         tamanho_arquivo++;
     }
-    rewind(compactado); // volta pro inicio pra ler de novo
+    rewind(compactado); 
 
     // le o cabecalho
     unsigned char byte1 = fgetc(compactado);
@@ -48,7 +45,7 @@ void descompactar(char *entrada, char *saida)
 
     No *raiz = ler_arvore(compactado);
 
-    // tirando os 2 bytes do cabecalho e os bytes da arvore, o resto sao os dados
+    // tirando os 2 bytes do cabecalho e os bytes da arvore, o resto sao codigos + lixo(se tiver)
     int bytes_de_dados = tamanho_arquivo - 2 - tam_arvore;
     
     No *atual = raiz;
@@ -58,7 +55,7 @@ void descompactar(char *entrada, char *saida)
 
         int ultimo_bit = 0;
         if (i == bytes_de_dados - 1) {
-            ultimo_bit = lixo; // no ultimo byte, ignora os bits de lixo
+            ultimo_bit = lixo;
         }
 
         for (int bit = 7; bit >= ultimo_bit; bit--) {

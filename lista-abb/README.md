@@ -15,4 +15,4 @@ Linux/WSL `./listaxabb`
 
 ### Arquivos:
 - listaXabb.c         -> Gera numeros randomizados e salva no arquivo "comparacoes_n.csv"
-- plot.R       -> Utiliza os valores do arquivo "comparacoes_n.csv" para gerar o gráfico.
+- plot.R              -> Utiliza os valores do arquivo "comparacoes_n.csv" para gerar o gráfico.
