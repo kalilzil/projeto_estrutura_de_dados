@@ -160,7 +160,7 @@ void free_tree(binary_tree *bt)
     }
     fprintf(f, "N,lista,abb\n");
 
-    for (int n = o; n < N_MAX; n++)
+    for (int n = 0; n < N_MAX; n++)
     {
         // insere mais um dado nas duas estruturas
         values[n] = rand();
@@ -174,7 +174,7 @@ void free_tree(binary_tree *bt)
 
             for (int i = 0; i < S; i++)
             {
-                int v = values[rand() % n];   // só entre os n já inseridos
+                int v = values[rand() % (n + 1)];   // só entre os n já inseridos
                 soma_lista += search_list(list, v);
                 soma_abb   += search_tree(tree, v);
             }
